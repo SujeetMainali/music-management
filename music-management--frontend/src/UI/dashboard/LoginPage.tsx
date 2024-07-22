@@ -1,6 +1,5 @@
 import { userSchema } from "@/schema/user.schema";
 import { yupResolver } from "@hookform/resolvers/yup";
-import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import InputBox from "../common/atoms/InputBox";
 import { Button } from "@/components/ui/button";
