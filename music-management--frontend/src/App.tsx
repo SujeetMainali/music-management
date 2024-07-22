@@ -1,10 +1,9 @@
-import "./App.css";
-import { Button } from "./components/ui/button";
+import LoginPage from "./UI/dashboard/LoginPage";
 
 function App() {
   return (
-    <div>
-      <Button className="">Click me</Button>
+    <div className=" w-full">
+      <LoginPage />
     </div>
   );
 }
