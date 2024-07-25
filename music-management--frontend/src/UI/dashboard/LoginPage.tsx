@@ -1,23 +1,22 @@
 import { userSchema } from "@/schema/user.schema";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Controller, useForm } from "react-hook-form";
-import InputBox from "../common/atoms/InputBox";
+import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-
+import { Input } from "@/components/ui/input";
 const LoginPage = () => {
   const defaultValues = {
     email: "",
     password: "",
   };
   const {
-    control,
     handleSubmit,
+    register,
     formState: { errors },
   } = useForm({
     defaultValues,
     resolver: yupResolver(userSchema),
   });
-
+  console.log(errors);
   const onSubmit = (data: any) => {
     console.log(data);
   };
@@ -25,7 +24,7 @@ const LoginPage = () => {
     <div className="min-h-screen flex items-center justify-center bg-background ">
       <div className="w-96 p-6 border border-gray-100 shadow-sm bg-white rounded-md">
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-          <Controller
+          {/* <Controller
             name="email"
             control={control}
             render={({ field }) => (
@@ -49,8 +48,26 @@ const LoginPage = () => {
                 error={errors.password}
               />
             )}
+          /> */}
+
+          <Input
+            label="Email"
+            type="email"
+            placeholder="Enter your email"
+            register={register("email")}
+            error={errors.email?.message}
+            isRequired
           />
-          <Button className="my-2 w-full" type="submit">
+
+          <Input
+            label="Password"
+            type="password"
+            placeholder="Enter your password"
+            register={register("password")}
+            error={errors.password?.message}
+            isRequired
+          />
+          <Button className="my-2 w-full bg-primary" type="submit">
             Submit
           </Button>
         </form>

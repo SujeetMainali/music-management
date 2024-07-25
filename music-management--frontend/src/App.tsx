@@ -2,7 +2,7 @@ import LoginPage from "./UI/dashboard/LoginPage";
 
 function App() {
   return (
-    <div className=" w-full">
+    <div className=" w-full ">
       <LoginPage />
     </div>
   );
