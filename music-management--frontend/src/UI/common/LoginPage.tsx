@@ -27,32 +27,6 @@ const LoginPage = () => {
     <div className="min-h-screen flex items-center justify-center bg-background ">
       <div className="w-96 p-6 border border-gray-100 shadow-sm bg-white rounded-md">
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-          {/* <Controller
-            name="email"
-            control={control}
-            render={({ field }) => (
-              <InputBox
-                label="Email"
-                placeholder="Enter your email"
-                {...field}
-                error={errors.email}
-              />
-            )}
-          />
-
-          <Controller
-            name="password"
-            control={control}
-            render={({ field }) => (
-              <InputBox
-                label="Password"
-                placeholder="Enter your password"
-                {...field}
-                error={errors.password}
-              />
-            )}
-          /> */}
-
           <Input
             label="Email"
             type="email"
@@ -74,6 +48,17 @@ const LoginPage = () => {
             Submit
           </Button>
         </form>
+        {/* dont have an account register */}
+        <div className="flex justify-center items-center mt-4">
+          <span>Don't have an account?</span>
+          <Button
+            variant="link"
+            className="text-accent "
+            onClick={() => navigate("/register")}
+          >
+            Register
+          </Button>
+        </div>
       </div>
     </div>
   );

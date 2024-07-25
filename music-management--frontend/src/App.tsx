@@ -1,7 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import LoginPage from "./UI/dashboard/LoginPage";
+import LoginPage from "./UI/common/LoginPage";
 import DashboardLayout from "./UI/dashboard/organisms/DashboardLayout";
 import { dashboardRoutes } from "./routes/dashboard.routes";
+import Register from "./UI/common/Register";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="" element={<LoginPage />}></Route>
+        <Route path="/register" element={<Register />}></Route>
 
         <Route path="/dashboard" element={<DashboardLayout />}>
           {dashboardRoutes.map((route, index) => (

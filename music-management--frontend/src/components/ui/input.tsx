@@ -4,12 +4,12 @@ import { UseFormRegisterReturn } from "react-hook-form";
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
-  type?: "text" | "password" | "email" | "number" | "search" | "tel";
-  label: string;
+  type?: "text" | "password" | "email" | "number" | "search" | "tel" | "date";
+  label?: string;
   placeholder?: string;
   register: UseFormRegisterReturn;
   error: string | undefined;
-  isRequired: boolean;
+  isRequired?: boolean;
 }
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (

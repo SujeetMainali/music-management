@@ -5,9 +5,11 @@ import { FaUsers, FaUserTie } from "react-icons/fa";
 import { useState } from "react";
 import { useDisclosure } from "@/hooks/useDisclosure";
 import { CustomAlertDialog } from "@/components/ui/alert-dialog";
+import { useNavigate } from "react-router-dom";
 
 const SideBar = () => {
   const { onClose } = useDisclosure();
+  const navigate = useNavigate();
   const [clickedItem, setClickedItem] = useState<number | null>(
     sessionStorage.getItem("clickedItem")
       ? Number(sessionStorage.getItem("clickedItem"))
@@ -15,7 +17,10 @@ const SideBar = () => {
   );
   return (
     <div className=" p-4 m-3 h-[90vh] flex flex-col gap-8">
-      <div className=" flex justify-between items-center rounded-md hover:bg-gray-200 p-4  ">
+      <div
+        className=" flex justify-between items-center rounded-md hover:bg-gray-200 p-4  "
+        onClick={() => navigate("/")}
+      >
         <span>
           <IoPersonCircle size={"2rem"} className=" text-secondary " />
         </span>
@@ -37,6 +42,7 @@ const SideBar = () => {
             onClick={() => {
               setClickedItem(index);
               sessionStorage.setItem("clickedItem", index.toString());
+              navigate(item.path);
             }}
           >
             <span> {item.icon}</span>
@@ -49,7 +55,7 @@ const SideBar = () => {
 
       <CustomAlertDialog
         trigger={
-          <div className=" flex gap-6 items-center rounded-md cursor-pointer hover:bg-gray-200 p-4  ">
+          <div className=" flex gap-6 h-12 p-5 items-center  cursor-pointer hover:text-accent hover:rounded-full hover:bg-[#DACFED] text-black  ">
             <span>
               <TbLogout2 size={"1.75rem"} className=" text-secondary" />
             </span>
@@ -88,7 +94,7 @@ const sideBarItems = [
         className=" text-secondary group-hover:text-accent"
       />
     ),
-    path: "/users",
+    path: "/dashboard/users",
   },
 
   {
@@ -99,7 +105,7 @@ const sideBarItems = [
         className=" text-secondary group-hover:text-accent"
       />
     ),
-    path: "/artists",
+    path: "/dashboard/artists",
   },
   // {
   //   name: "Logout",
