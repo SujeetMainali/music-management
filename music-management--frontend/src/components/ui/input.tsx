@@ -25,7 +25,6 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     },
     ref
   ) => {
-    console.log("error", error);
     return (
       <>
         <div>
@@ -45,9 +44,10 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             error ? "border-red-500" : "border-input"
           )}
           {...props}
+          // @ts-ignore
+          ref={ref}
           {...register}
           placeholder={placeholder}
-          ref={ref}
         />
         {error && <small className=" text-red-600">{error}</small>}
       </>

@@ -3,7 +3,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useNavigate } from "react-router-dom";
 const LoginPage = () => {
+  const navigate = useNavigate();
   const defaultValues = {
     email: "",
     password: "",
@@ -19,6 +21,7 @@ const LoginPage = () => {
   console.log(errors);
   const onSubmit = (data: any) => {
     console.log(data);
+    navigate("/dashboard");
   };
   return (
     <div className="min-h-screen flex items-center justify-center bg-background ">
