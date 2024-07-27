@@ -3,6 +3,8 @@ import { Slot } from "@radix-ui/react-slot";
 import { ChevronRight, MoreHorizontal } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { Button } from "./button";
+import { useNavigate } from "react-router-dom";
 
 const Breadcrumb = React.forwardRef<
   HTMLElement,
@@ -119,8 +121,9 @@ interface IProps {
   separator?: React.ReactNode;
 }
 export const CustomBreadcrumb = ({ items, separator }: IProps) => {
+  const navigate = useNavigate();
   return (
-    <Breadcrumb>
+    <Breadcrumb className=" flex justify-between">
       <BreadcrumbList>
         {items.map((item, index) => (
           <React.Fragment key={index}>
@@ -133,6 +136,9 @@ export const CustomBreadcrumb = ({ items, separator }: IProps) => {
           </React.Fragment>
         ))}
       </BreadcrumbList>
+      <Button variant={"outline"} onClick={() => navigate(-1)}>
+        Go Back
+      </Button>
     </Breadcrumb>
   );
 };

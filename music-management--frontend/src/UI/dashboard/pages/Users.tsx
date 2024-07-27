@@ -1,3 +1,5 @@
+import { CustomBreadcrumb } from "@/components/ui/breadcrumb";
+import { usePath } from "@/hooks/usePath";
 import { CustomTable } from "@/UI/common/molecules/Table";
 import { ColumnDef } from "@tanstack/react-table";
 import React, { useEffect } from "react";
@@ -120,6 +122,7 @@ const Users = () => {
   useEffect(() => {
     getData().then((data) => setData(data));
   }, []);
+  const breadcrumbPaths = usePath()
   const columns: ColumnDef<any>[] = [
     {
       accessorKey: "id",
@@ -140,6 +143,7 @@ const Users = () => {
   ];
   return (
     <div className="container mx-auto py-10">
+      <CustomBreadcrumb items={breadcrumbPaths} separator={"-"} />
       <CustomTable columns={columns} data={data} />
     </div>
   );
