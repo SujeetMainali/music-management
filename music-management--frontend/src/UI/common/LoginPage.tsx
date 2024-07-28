@@ -4,8 +4,18 @@ import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import { ILoginRequest, ILoginResponse } from "@/interface/auth/auth.interface";
+import useAPI from "@/hooks/useApi";
+import useAuth from "@/hooks/useAuth";
+import { endpointRoutes } from "@/constants/endpoints/endpointRoutes";
+import { toast } from "sonner";
 const LoginPage = () => {
   const navigate = useNavigate();
+  const { post } = useAPI();
+  const { setUser, user } = useAuth();
+  console.log("user", user);
+
   const defaultValues = {
     email: "",
     password: "",
@@ -18,10 +28,40 @@ const LoginPage = () => {
     defaultValues,
     resolver: yupResolver(userSchema),
   });
-  console.log(errors);
+
+  const loginFn = async (data: ILoginRequest) => {
+    const response = (await post(
+      endpointRoutes.login,
+      data
+    )) as unknown as ILoginResponse;
+    console.log("response", response);
+    if (response?.status) {
+      setUser(response.data);
+    }
+    if (!response?.status)
+      throw new Error(response?.message || "An error occurred");
+  };
+  const { mutateAsync } = useMutation({
+    mutationFn: loginFn,
+    onSuccess: () => {
+      toast.success("Success", {
+        description: "User Logged in successfully",
+      });
+      navigate("/dashboard");
+    },
+    onError: (error) => {
+      toast.error("Error", {
+        description: error.message,
+      });
+    },
+  });
   const onSubmit = (data: any) => {
     console.log(data);
-    navigate("/dashboard");
+    mutateAsync(data);
+    // toast.success("Success", {
+    //   description: "User Logged in successfully",
+    // });
+    // navigate("/dashboard");
   };
   return (
     <div className="min-h-screen flex items-center justify-center bg-background ">

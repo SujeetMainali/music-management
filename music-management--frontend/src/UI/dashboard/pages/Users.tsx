@@ -1,8 +1,11 @@
 import { CustomBreadcrumb } from "@/components/ui/breadcrumb";
 import { usePath } from "@/hooks/usePath";
+import Header from "@/UI/common/molecules/Header";
 import { CustomTable } from "@/UI/common/molecules/Table";
 import { ColumnDef } from "@tanstack/react-table";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import AddUsers from "../organisms/users/AddUsers";
+import { useDisclosure } from "@/hooks/useDisclosure";
 async function getData(): Promise<any[]> {
   // Fetch data from your API here.
   return [
@@ -119,10 +122,12 @@ async function getData(): Promise<any[]> {
 
 const Users = () => {
   const [data, setData] = React.useState<any[]>([]);
+  // const { isOpen, onClose, onOpen } = useDisclosure();
+  const [isOpen, setIsOpen] = useState(false);
   useEffect(() => {
     getData().then((data) => setData(data));
   }, []);
-  const breadcrumbPaths = usePath()
+  const breadcrumbPaths = usePath();
   const columns: ColumnDef<any>[] = [
     {
       accessorKey: "id",
@@ -142,9 +147,18 @@ const Users = () => {
     },
   ];
   return (
-    <div className="container mx-auto py-10">
+    <div className="flex flex-col gap-3 px-2 py-2">
       <CustomBreadcrumb items={breadcrumbPaths} separator={"-"} />
+      <Header
+        title="Manage Users"
+        buttonIcon={<></>}
+        buttonLabel="Add"
+        setOpen={() => {
+          setIsOpen(!isOpen);
+        }}
+      />
       <CustomTable columns={columns} data={data} />
+      <AddUsers open={isOpen} setOpen={() => setIsOpen(!isOpen)} />
     </div>
   );
 };

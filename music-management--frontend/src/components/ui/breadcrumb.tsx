@@ -123,7 +123,7 @@ interface IProps {
 export const CustomBreadcrumb = ({ items, separator }: IProps) => {
   const navigate = useNavigate();
   return (
-    <Breadcrumb className=" flex justify-between">
+    <Breadcrumb className=" flex justify-between pl-4">
       <BreadcrumbList>
         {items.map((item, index) => (
           <React.Fragment key={index}>

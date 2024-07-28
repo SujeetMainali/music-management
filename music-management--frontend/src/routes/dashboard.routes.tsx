@@ -1,3 +1,4 @@
+import Artists from "@/UI/dashboard/pages/Artists";
 import Dashboard from "@/UI/dashboard/pages/Dashboard";
 import Users from "@/UI/dashboard/pages/Users";
 interface IRoutes {
@@ -12,5 +13,9 @@ export const dashboardRoutes: IRoutes[] = [
   {
     path: "/dashboard/users",
     element: <Users />,
+  },
+  {
+    path: "/dashboard/artists",
+    element: <Artists />,
   },
 ];
