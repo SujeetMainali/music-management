@@ -40,3 +40,13 @@ export class RegisterUserDTO {
   @IsString()
   address: string;
 }
+
+export class UserLoginDTO {
+  @IsEmail()
+  @IsEmail()
+  email: string;
+
+  @IsNotEmpty()
+  @IsString()
+  password: string;
+}

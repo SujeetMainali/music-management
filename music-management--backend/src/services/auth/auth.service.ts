@@ -1,10 +1,10 @@
 import BcryptService from "../../utils/bcrypt";
-import { RegisterUserDTO } from "../../DTOs/auth/auth.dto";
+import { RegisterUserDTO, UserLoginDTO } from "../../DTOs/auth/auth.dto";
 import { pool } from "../../config/database.config";
+import { HttpExceptionError } from "../../utils/httpException.utils";
 
 class AuthService {
   async registerUser(data: RegisterUserDTO) {
-    console.log("1");
     const {
       first_name,
       last_name,
@@ -15,12 +15,9 @@ class AuthService {
       password,
       phone,
     } = data;
-    console.log("2");
     const hashedPassword = await BcryptService.hash(password);
-    console.log("3");
     const query =
       'INSERT INTO "users" (first_name, last_name, email, password, phone, dob, gender, address) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)';
-    console.log("4");
     const result = await pool.query(query, [
       first_name,
       last_name,
@@ -32,9 +29,24 @@ class AuthService {
       address,
     ]);
 
-    console.log("5");
-
     return result.rows[0];
+  }
+
+  async userLogin(data: UserLoginDTO) {
+    const user = await pool.query('SELECT * FROM "users" WHERE email = $1', [
+      data.email,
+    ]);
+    if (!user.rows[0]) {
+      throw HttpExceptionError.notFound("User not found");
+    }
+    const isPasswordValid = await BcryptService.compare(
+      data.password,
+      user.rows[0].password
+    );
+    if (!isPasswordValid) {
+      throw HttpExceptionError.unauthorized("Invalid password");
+    }
+    return user.rows[0];
   }
 }
 

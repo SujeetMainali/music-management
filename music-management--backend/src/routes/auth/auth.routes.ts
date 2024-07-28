@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { RegisterUserDTO } from "../../DTOs/auth/auth.dto";
+import { RegisterUserDTO, UserLoginDTO } from "../../DTOs/auth/auth.dto";
 import { catchAsync } from "../../utils/catchAsync";
 import RequestValidator from "../../middlewares/requestValidator.middleware";
 import authController from "../../controller/auth/auth.controller";
@@ -11,5 +11,11 @@ router
     RequestValidator(RegisterUserDTO),
     catchAsync(authController.registerUser.bind(authController))
   );
+
+router.post(
+  "/user-login",
+  RequestValidator(UserLoginDTO),
+  catchAsync(authController.userLogin.bind(authController))
+);
 
 export default router;
